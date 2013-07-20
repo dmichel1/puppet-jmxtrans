@@ -8,11 +8,10 @@ class jmxtrans {
     service { 'jmxtrans':
         ensure => running,
         enable => true,
+        require => Package['jmxtrans'],
     }
 
- jmxtrans::writer { 'test':
-     host => 'localhost',
-         port => 2101,
-           }
+    # collect exported resources
+    Jmxtrans::Writer::Graphite <<| tag == 'jmxtrans' |>>
 
 }
