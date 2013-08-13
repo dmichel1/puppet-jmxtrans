@@ -37,7 +37,7 @@ To add an app server
 ```puppet
 node 'app01' {
     @@jmxtrans::writer::graphite { $::fqdn:
-        host_port      => 2101,
+        hostPort      => 2101,
         graphiteServer => 'graphite.drewl.org',
         graphitePort   => 2003,
     }
