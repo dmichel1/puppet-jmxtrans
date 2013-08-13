@@ -1,12 +1,12 @@
 define jmxtrans::writer::graphite (
     $graphiteServer,
     $graphitePort,
-    $host_port,
-    $host_fqdn       = $name,
+    $hostPort,
+    $hostFQDN        = $name,
     $numQueryThreads = hiera('jmxtrans_numQueryThreads', 2)
 ) {
 
-    file { "/tmp/test.json":
+    file { "/var/lib/jmxtrans/${hostFQDN}_${hostPort}.json":
         ensure   => file,
         mode     => '0644',
         owner    => 'jmxtrans',

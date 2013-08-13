@@ -6,8 +6,8 @@ class jmxtrans {
 
 
     service { 'jmxtrans':
-        ensure => running,
-        enable => true,
+        ensure  => running,
+        enable  => true,
         require => Package['jmxtrans'],
     }
 

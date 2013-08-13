@@ -1,0 +1,57 @@
+{
+  "servers" : [ {
+    "host" : "<%= @host_fqdn %>",
+    "port" : "<%= @host_port %>",
+    "queries" : [ {
+
+        "obj" : "java.lang:type=Memory",
+        "resultAlias": "heap",
+        "attr" : [ "HeapMemoryUsage", "NonHeapMemoryUsage" ],
+
+        "outputWriters" : [ {
+          "@class" : "com.googlecode.jmxtrans.model.output.KeyOutWriter",
+          "settings" : {
+            "outputFile" : "<%= @outputFile %>",
+            "maxLogFileSize" : "25MB",
+            "maxLogBackupFiles" : 90,
+            "debug" : <%= @debug %>,
+            "typeNames" : ["name"]
+          }
+        } ]
+      }, {
+        "obj" : "java.lang:type=Threading",
+        "resultAlias": "threads",
+        "attr" : [ "DaemonThreadCount", "PeakThreadCount", "ThreadCount", "TotalStartedThreadCount" ]
+
+        "outputWriters" : [ {
+          "@class" : "com.googlecode.jmxtrans.model.output.KeyOutWriter",
+          "settings" : {
+            "outputFile" : "<%= @outputFile %>",
+            "maxLogFileSize" : "25MB",
+            "maxLogBackupFiles" : 90,
+            "debug" : <%= @debug %>,
+            "typeNames" : ["name"]
+          }
+        } ]
+      }, {
+
+        "obj" : "Catalina:type=DataSource,class=javax.sql.DataSource,name=*",
+        "resultAlias": "datasources",
+        "attr" : [ "numActive", "numIdle" ],
+
+        "outputWriters" : [ {
+          "@class" : "com.googlecode.jmxtrans.model.output.KeyOutWriter",
+          "settings" : {
+            "outputFile" : "<%= @outputFile %>",
+            "maxLogFileSize" : "25MB",
+            "maxLogBackupFiles" : 90,
+            "debug" : <%= @debug %>,
+            "typeNames" : ["name"]
+          }
+        } ]
+      } ],  
+
+    "numQueryThreads" : <%= @numQueryThreads %>
+
+  }]
+}
