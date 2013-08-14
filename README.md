@@ -1,4 +1,4 @@
-puppet-jmxtrans - Under Development
+puppet-jmxtrans
 ===============
 A Puppet module used to install, configure and manage JMXTrans.
 

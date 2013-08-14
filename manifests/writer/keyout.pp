@@ -1,10 +1,13 @@
 define jmxtrans::writer::keyout (
-    $hostFQDN,
     $hostPort,
-    $outputFile        = hiera('jmxtrans_koOutputFile', '/tmp'),
-    $debug             = hiera('jmxtrans_koDebug', false),
-    $numQueryThreads   = hiera('jmxtrans_numQueryThreads', 2)
+    $hostFQDN          = $name,
+    $outputFile        = hiera('jmxtrans::keyoutOutputFile', '/var/log/jmxtrans/keyout'),
+    $debug             = hiera('jmxtrans::keyoutDebug', false),
+    $numQueryThreads   = hiera('jmxtrans::numQueryThreads', 2)
 ) {
+
+    # realize the virtual resource only once
+    File <| title == '/var/log/jmxtrans/keyout' |>
 
     file { "/var/lib/jmxtrans/${hostFQDN}_${hostPort}.json":
         ensure   => file,
@@ -13,6 +16,7 @@ define jmxtrans::writer::keyout (
         group    => 'jmxtrans',
         content  => template('jmxtrans/var/lib/jmxtrans/tomcat-keyout.json.erb'),
         notify   => Service['jmxtrans'],
+        tag      => 'jmxtrans-keyout',
     }
 
 

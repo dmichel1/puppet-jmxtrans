@@ -3,7 +3,7 @@ define jmxtrans::writer::graphite (
     $graphitePort,
     $hostPort,
     $hostFQDN        = $name,
-    $numQueryThreads = hiera('jmxtrans_numQueryThreads', 2)
+    $numQueryThreads = hiera('jmxtrans::numQueryThreads', 2)
 ) {
 
     file { "/var/lib/jmxtrans/${hostFQDN}_${hostPort}.json":
@@ -13,7 +13,7 @@ define jmxtrans::writer::graphite (
         group    => 'jmxtrans',
         content  => template('jmxtrans/var/lib/jmxtrans/tomcat-graphite.json.erb'),
         notify   => Service['jmxtrans'],
-        tag      => 'jmxtrans',
+        tag      => 'jmxtrans-graphite',
     }
 
 
